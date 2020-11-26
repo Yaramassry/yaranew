@@ -1,8 +1,11 @@
 import React, { Component } from "react";
-//import login from './login.css'; 
+//import login from './login.css';
 import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBCard, MDBInput } from 'mdbreact';
 import { getLogin } from "../actions/loginAction";
 import { connect } from 'react-redux';
+import { ToastContainer , toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+
 class Login extends React.Component {
     constructor() {
         super();
@@ -16,7 +19,7 @@ class Login extends React.Component {
             blocked:"",
             confirmed: "",
             token: "",
-        
+
           login: false,
         };
       }
@@ -41,7 +44,7 @@ class Login extends React.Component {
           nextProps.blocked!== undefined &&
           nextProps.confirmed!== undefined &&
           nextProps.token!== undefined &&
-          nextProps.login!== false 
+          nextProps.login!== false
         ) {
         //   const { array } = nextProps;
           this.setState({
@@ -55,8 +58,8 @@ class Login extends React.Component {
             confirmed: nextProps.confirmed,
             token: nextProps.token,
             login: true,
-        
-            
+
+
           });
         } else {
           this.setState({
@@ -72,8 +75,16 @@ class Login extends React.Component {
             login:false,
           });
         }
-      }
 
+
+      }
+alertFun(){
+  const name = document.getElementById("name").value;
+  const password = document.getElementById("pass").value;
+  if (name !== "" && password.length >=8 ){
+    this.props.getLogin(name,password, toast);
+  }
+}
 
     render(){
   return (
@@ -92,11 +103,12 @@ class Login extends React.Component {
               <div className='text-center'>
                 <h3 className='white-text mb-5 mt-4 font-weight-bold'>
                   <strong>LOGIN</strong>
-                  
-                 
+
+
                 </h3>
               </div>
               <MDBInput
+                id ='name'
                 label='Your name'
                 group
                 type='text'
@@ -104,6 +116,7 @@ class Login extends React.Component {
                 labelClass='white-text'
               />
               <MDBInput
+                id ='pass'
                 label='Your password'
                 group
                 type='password'
@@ -111,13 +124,13 @@ class Login extends React.Component {
                 labelClass='white-text'
               />
               <div className='md-form pb-3'>
-                
+
               </div>
               <MDBRow className='d-flex align-items-center mb-4'>
                 <div className='text-center mb-3 col-md-12'>
-                  <MDBBtn onClick={()=>{alert( 'Hello' +this.state.name )}}
+                  <MDBBtn onClick={()=>{this.alertFun()}}
                     color='success'
-                   
+
                     rounded
                     type='button'
                     className='btn-block z-depth-1'
@@ -138,13 +151,15 @@ class Login extends React.Component {
           </MDBCard>
         </MDBCol>
       </MDBRow>
+      <ToastContainer position="top-center"/>
     </MDBContainer>
+
   );
 };
 }
 
 const mapStateToProps = (state) => ({
-        
+
         id: state.loginR.id,
         name: state.loginR.name,
         email: state.loginR.email,
@@ -157,7 +172,7 @@ const mapStateToProps = (state) => ({
         login:state.loginR.login,
   });
 
-  
+
 export default connect(mapStateToProps, {
     getLogin,
   })(Login);

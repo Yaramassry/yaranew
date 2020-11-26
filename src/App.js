@@ -13,16 +13,17 @@ function App() {
   return (
     <div>
       <Router>
+      <Provider store={store}>
         <Nav />
         <div className="container main_container bg-white">
           <Switch>
-            <Provider store={store}>
               <Route path="/" exact component={Albums} />
               <Route path="/login" exact component={Login} />
-            </Provider>
+
             <Route component={notfound} />
           </Switch>
         </div>
+        </Provider>
       </Router>
 
       <Footer />

@@ -1,0 +1,28 @@
+.main-footer{
+    padding: 0.5rem;
+    color: white;
+    background-color:  rgb(38, 34, 46);
+    /* padding-top: 0.05em; */
+    width: 100%;
+    font-family: 'Indie Flower' , cursive;
+}
+
+
+    .footer{
+     
+        height: 5pc;
+        background-color:  rgb(216, 207, 211);
+        
+    }
+    
+  
+    
+    .call{
+        margin-right: 2cm;
+    } 
+    /* .list-unstyled{
+        font-weight: bold;
+    } */
+    .col{
+        margin-left: 0.5cm;
+    }

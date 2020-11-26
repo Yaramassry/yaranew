@@ -8,12 +8,13 @@ import { FormControl } from 'react-bootstrap';
 import { Form } from 'react-bootstrap';
 import { NavDropdown } from 'react-bootstrap';
 import { Nav } from 'react-bootstrap';
-
+import { connect } from 'react-redux';
 
 
 
 class nav extends  React.Component{
     render(){
+      console.log(this.props);
         return(
 <Navbar bg="light" expand="lg">
   <Navbar.Brand href="#home"> MyMov</Navbar.Brand>
@@ -22,7 +23,7 @@ class nav extends  React.Component{
     <Nav className="mr-auto">
       <Nav.Link href="/">Home</Nav.Link>
       <Nav.Link href="/album">Album</Nav.Link>
-      <Nav.Link href="/Login">Login</Nav.Link>
+      {this.props.login ? <Nav.Link href="/Logout">Logout</Nav.Link> : <Nav.Link href="/Login">Login</Nav.Link>}
       <NavDropdown title="Types of Films" id="basic-nav-dropdown">
         <NavDropdown.Item href="#action/3.1">Comedy</NavDropdown.Item>
             <ul>
@@ -42,17 +43,21 @@ class nav extends  React.Component{
         </ul>
 
         <NavDropdown.Divider />
-       
+
       </NavDropdown>
     </Nav>
-   
+
   </Navbar.Collapse>
 </Navbar>
 
         )
     }
 }
-export default nav ;
+const mapStateToProps = (state) => ({
+        login:state.login,
+  });
+
+export default connect(mapStateToProps)(nav);
 
 // <div>
 // <nav className="navbar navbar-expand-lg navbar-light bg-light navbar-dark bg-dark">

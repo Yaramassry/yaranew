@@ -1,30 +1,37 @@
 import { LOGIN } from './types';
 import axios from 'axios';
 
-export const getLogin = (dddd,asasds) => async (dispatch) => {
+export const getLogin = (email,password, toast) => async (dispatch) => {
     let res = {};
     let errorRes = {
       errorStatus: '',
       errorMessage: '',
+      email : "",
+      password:"",
     };
-    
-  await axios
-  .post(`http://207.180.233.248/v1/login`,{email: dddd,
-  password:asasds
+
+  axios.post(`http://207.180.233.248/ikar_api/v1/login`,{email: email,
+  password:password
   })
 
   .then(function (response) {
     console.log(response);
     if (
       response !== null &&
-      response !== undefined &&
-      Object.keys(response).length > 0
+      response !== undefined
     ) {
       res = response.data;
+      toast.info("You are logged in");
     } else res = {};
   })
   .catch(function (error) {
     if (error.response) {
+      if (error.response.status == 422) {
+        toast.error("Invalid email, please input a valid email address" , {position:"top-center"});
+      }
+      else if (error.response.status == 401) {
+        toast.error("Wrong email or password, please try again" , {position:"top-center"});
+      }
       errorRes = {
         errorStatus: error.response.status,
         errorMessage: error.response,
@@ -38,7 +45,7 @@ export const getLogin = (dddd,asasds) => async (dispatch) => {
     }
     res = errorRes;
   });
-  
+
   dispatch({
     type: LOGIN,
     payload: res,
