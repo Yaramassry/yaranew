@@ -21,7 +21,7 @@ export const getLogin = (email,password, toast) => async (dispatch) => {
       response !== undefined
     ) {
       res = response.data;
-      toast.info("You are logged in");
+      toast.info("Welcome " + response.data.email);
     } else res = {};
   })
   .catch(function (error) {
