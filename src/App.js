@@ -7,6 +7,7 @@ import Albums from './albums/Albums';
 import Login from './login/Login';
 import notfound from './notfound';
 import store from './store';
+import Cities from './Cities/Cities';
 import { Provider } from 'react-redux';
 
 function App() {
@@ -17,8 +18,11 @@ function App() {
         <Nav />
         <div className="container main_container bg-white">
           <Switch>
+         
               <Route path="/" exact component={Albums} />
               <Route path="/login" exact component={Login} />
+              <Route path="/logout" exact component={Login} />
+              <Route path="/cities" exact component={Cities} />
 
             <Route component={notfound} />
           </Switch>

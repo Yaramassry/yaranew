@@ -1,6 +1,5 @@
 import { LOGIN } from '../actions/types';
 const initialState = {
-        albums: [],
         user: {},
         login: false
   };
@@ -14,7 +13,6 @@ export default function (state = initialState, action) {
             action.payload.errorMessage === undefined)
         ) {
           return {
-            albums: state.albums,
             user: {
               id: action.payload.id,
               name: action.payload.name,
@@ -31,7 +29,6 @@ export default function (state = initialState, action) {
           };
         } else {
           return {
-            albums: state.albums,
             user: state.user,
             login: false
           };

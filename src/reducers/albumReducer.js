@@ -1,9 +1,7 @@
 import { GET_ALBUMS } from '../actions/types';
 
 const initialState = {
-  albums: [],
-  user: {},
-  login: false
+  albums: []
 };
 
 export default function (state = initialState, action) {
@@ -16,16 +14,12 @@ export default function (state = initialState, action) {
       ) {
         return {
           albums: action.payload,
-          requestFailedMessage: { error: 'no' },
-          user: state.user,
-          login: state.login
+          requestFailedMessage: { error: 'no' }
         };
       } else {
         return {
           albums: [],
-          requestFailedMessage: action.payload,
-          user: state.user,
-          login: state.login
+          requestFailedMessage: action.payload
         };
       }
 

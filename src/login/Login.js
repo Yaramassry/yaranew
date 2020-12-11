@@ -10,6 +10,7 @@ class Login extends React.Component {
     constructor() {
         super();
         this.state = {
+          user:{},
             id: "",
             name: "",
             email: "",
@@ -21,46 +22,62 @@ class Login extends React.Component {
             token: "",
 
           login: false,
+          input: {},
+          errors: {}
         };
-      }
+      //   this.handleChange = this.handleChange.bind(this);
+      //   this.handleSubmit = this.handleSubmit.bind(this);
+       }
+
+
+      // handleChange(event) {
+      //   let input = this.state.input;
+      //   input[event.target.name] = event.target.value;
+      
+      //   this.setState({
+      //     input
+      //   });
+      // }
+
+    
+      handleSubmit(event) {
+        event.preventDefault();
+      
+        if(this.validate()){
+            console.log(this.state);
+      
+            let input = {};
+            input["email"] = "";
+            this.setState({input:input});
+      
+            alert('Demo Form is submited');
+        }
+      }    
+
+
+
       async componentWillReceiveProps(nextProps, nextState) {
         if (
-          nextProps.id !== this.state.id &&
-          nextProps.name !== this.state.name &&
-          nextProps.email !== this.state.email &&
-          nextProps.agency_admin !== this.state.agency_admin &&
-          nextProps.ikar_admin !== this.state.ikar_admin &&
-          nextProps.agency_ref_id !== this.state.agency_ref_id &&
-          nextProps.blocked !== this.state.blocked &&
-          nextProps.confirmed !== this.state.confirmed &&
-          nextProps.token !== this.state.token &&
-          nextProps.login !== this.state.login &&
-          nextProps.id!== undefined &&
-          nextProps.name!== undefined &&
-          nextProps.email!== undefined &&
-          nextProps.agency_admin!== undefined &&
-          nextProps.ikar_admin!== undefined &&
-          nextProps.agency_ref_id!== undefined &&
-          nextProps.blocked!== undefined &&
-          nextProps.confirmed!== undefined &&
-          nextProps.token!== undefined &&
-          nextProps.login!== false
+          nextProps.user !== this.state.user 
+
         ) {
         //   const { array } = nextProps;
           this.setState({
-            id: nextProps.id,
-            name: nextProps.name,
-            email: nextProps.email,
-            agency_admin: nextProps.agency_admin,
-            ikar_admin: nextProps.ikar_admin,
-            agency_ref_id:nextProps.agency_ref_id,
-            blocked: nextProps.blocked,
-            confirmed: nextProps.confirmed,
-            token: nextProps.token,
+            id: nextProps.user.id,
+            name: nextProps.user.name,
+            email: nextProps.user.email,
+            agency_admin: nextProps.user.agency_admin,
+            ikar_admin: nextProps.user.ikar_admin,
+            agency_ref_id:nextProps.user.agency_ref_id,
+            blocked: nextProps.user.blocked,
+            confirmed: nextProps.user.confirmed,
+            token: nextProps.user.token,
             login: true,
 
 
-          });
+          })
+        console.log(this.state.name);
+          toast.info("welcome  "+ nextProps.user.email);
         } else {
           this.setState({
             id: null,
@@ -78,17 +95,68 @@ class Login extends React.Component {
 
 
       }
-alertFun(){
-  const name = document.getElementById("name").value;
-  const password = document.getElementById("pass").value;
-  if (name !== "" && password.length >=8 ){
-    this.props.getLogin(name,password, toast);
-  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+      // validate(){
+      //   let input = this.state.input;
+      //   let errors = {};
+      //   let isValid = true;
+      //   if (!input["email"]) {
+      //     isValid = false;
+      //     errors["email"] = "Please enter your email Address.";
+      //   }
+      //   if (typeof input["email"] !== "undefined") {
+          
+      //     var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+      //     if (!pattern.test(input["email"])) {
+      //       isValid = false;
+      //       errors["email"] = "Please enter valid email address.";
+      //     }
+      //   }
+      //   this.setState({
+      //     errors: errors
+      //   });
+      //   return isValid;
+      // }
+
+alertFun(event){
+      const name = document.getElementById("name").value;
+      const password = document.getElementById("pass").value;
+      if (name !== "" && password.length >=8 ){
+        this.props.getLogin(name,password, toast);
+      
+      }else if (name==""){
+        toast.info("please enter your email");
+      }else if(password==""){
+        toast.info("please enter your password");
+      }else if (password.length <8){
+        toast.error("passwoard must be 8 charecters at least");
+      }
+
+      let input = this.state.input;
+    // input[event.target.name] = event.target.value;
+
+      this.setState({
+        input
+      });
 }
 
     render(){
   return (
     <MDBContainer>
+      
       <MDBRow>
         <MDBCol md='6'>
           <MDBCard
@@ -110,10 +178,13 @@ alertFun(){
               <MDBInput
                 id ='name'
                 label='Your name'
+                pl
                 group
+                value={this.state.input.email}
                 type='text'
                 validate
                 labelClass='white-text'
+                
               />
               <MDBInput
                 id ='pass'
@@ -122,6 +193,7 @@ alertFun(){
                 type='password'
                 validate
                 labelClass='white-text'
+               
               />
               <div className='md-form pb-3'>
 
@@ -159,17 +231,7 @@ alertFun(){
 }
 
 const mapStateToProps = (state) => ({
-
-        id: state.loginR.id,
-        name: state.loginR.name,
-        email: state.loginR.email,
-        agency_admin: state.loginR.agency_admin,
-        ikar_admin: state.loginR.ikar_admin,
-        agency_ref_id:state.loginR.agency_admin,
-        blocked:state.loginR.blocked,
-        confirmed: state.loginR.confirmed,
-        token: state.loginR.token,
-        login:state.loginR.login,
+  user:state.loginR.user
   });
 
 

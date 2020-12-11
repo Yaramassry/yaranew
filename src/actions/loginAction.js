@@ -21,8 +21,12 @@ export const getLogin = (email,password, toast) => async (dispatch) => {
       response !== undefined
     ) {
       res = response.data;
-      toast.info("Welcome " + response.data.email);
+    
     } else res = {};
+    dispatch({
+      type: LOGIN,
+      payload: res,
+    });
   })
   .catch(function (error) {
     if (error.response) {
@@ -30,7 +34,7 @@ export const getLogin = (email,password, toast) => async (dispatch) => {
         toast.error("Invalid email, please input a valid email address" , {position:"top-center"});
       }
       else if (error.response.status == 401) {
-        toast.error("Wrong email or password, please try again" , {position:"top-center"});
+       toast.error("Wrong email or password, please try again" , {position:"top-center"});
       }
       errorRes = {
         errorStatus: error.response.status,
@@ -44,10 +48,9 @@ export const getLogin = (email,password, toast) => async (dispatch) => {
       errorRes = { errorMessage: error.message };
     }
     res = errorRes;
-  });
-
-  dispatch({
-    type: LOGIN,
-    payload: res,
+    dispatch({
+      type: LOGIN,
+      payload: res,
+    });
   });
 }
