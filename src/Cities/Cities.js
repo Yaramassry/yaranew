@@ -24,7 +24,7 @@ class Cities extends React.Component {
               this.setState({
                   properities: nextProps.properities
                   })
-              console.log(this.state.properities)
+              //console.log(this.state.properities)
             
             } else {
               this.setState({
@@ -45,8 +45,10 @@ class Cities extends React.Component {
     render(){
             let filterCity=["دمشق","ريف دمشق","اللاذقية","حلب","حماة","الرقة",
             "درعا","دير الزور","طرطوس","الحسكة","القنيطرة","القامشلي","ادلب","حلب"];
-
-
+            
+            let ikars = this.state.properities;
+            console.log(ikars);
+            console.log(this.state.properities);
             return(
               <div>
                 <div>
@@ -67,21 +69,14 @@ class Cities extends React.Component {
                           </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                          <td>Titanic</td>
-                          <td>800000000</td>
-                          <td>0965662433</td>
-                          </tr>
-                          <tr>
-                          <td>Titanic</td>
-                          <td>800000000</td>
-                          <td>0965662433</td>
-                          </tr>
-                          <tr>
-                          <td>Titanic</td>
-                          <td>800000000</td>
-                          <td>0965662433</td>
-                          </tr>
+                      {this.state.properities.map(ikar=>(
+                            <tr>
+                            <td>{ikar.title}</td>
+                            <td>800000000</td>
+                            <td>0965662433</td>
+                            </tr>
+                      ))}
+                       
                     </tbody>
                 </table>
         </div>
