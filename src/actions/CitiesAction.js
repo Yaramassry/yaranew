@@ -9,12 +9,12 @@ export const getCities = (visible,province, order) => async (dispatch) => {
       visible : "",
       province:"",
       order:"",
-     
+
     };
 
 
 axios.post(`http://207.180.233.248/ikar_api/v1/properties/search?per_page=12&page=1`,{visible: visible,
-province:province, order:order 
+province:province, order:order
 })
 .then(function (response) {
     console.log(response);
@@ -51,6 +51,6 @@ province:province, order:order
       payload: res,
     });
 
-    
+
   });
 }

@@ -5,8 +5,8 @@ import { getCities } from "../actions/CitiesAction";
 
 
 class Cities extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             properities:[],
          
@@ -17,18 +17,19 @@ class Cities extends React.Component {
         async componentWillReceiveProps(nextProps, nextState) {
          
             if (
-              nextProps.properities !== this.state.properities 
+              nextProps.properities !== this.state.properities
     
             ) {
               
               this.setState({
                   properities: nextProps.properities
                   })
-              //console.log(this.state.properities)
+                  console.log("11111");
+              console.log(this.state.properities)
             
             } else {
               this.setState({
-              properities:null
+                properities:null
               });
           
             }
@@ -46,9 +47,9 @@ class Cities extends React.Component {
             let filterCity=["دمشق","ريف دمشق","اللاذقية","حلب","حماة","الرقة",
             "درعا","دير الزور","طرطوس","الحسكة","القنيطرة","القامشلي","ادلب","حلب"];
             
-            let ikars = this.state.properities;
-            console.log(ikars);
-            console.log(this.state.properities);
+             let ikars = this.state.properities;
+            
+            // console.log(ikars);
             return(
               <div>
                 <div>
@@ -59,6 +60,8 @@ class Cities extends React.Component {
                 </div>
                 <br/>
                 <br/>
+              
+                  
                       
                 <table className="customers" >
                     <thead>
@@ -69,11 +72,12 @@ class Cities extends React.Component {
                           </tr>
                     </thead>
                     <tbody>
-                      {this.state.properities.map(ikar=>(
-                            <tr>
-                            <td>{ikar.title}</td>
-                            <td>800000000</td>
-                            <td>0965662433</td>
+                      {ikars.map((ikar)=>(
+                            <tr key={ikar.reference_id}>
+                           
+                            <td><img src={"http://207.180.233.248/" + ikar.thumbnails[0]} /></td>
+                            <td >{ikar.title}</td>
+                            <td>{ikar.agency_mobile}</td>
                             </tr>
                       ))}
                        
@@ -86,7 +90,7 @@ class Cities extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  properities:state.citiesR
+  properities:state.citiesR.properties
     });
 export default connect(mapStateToProps, {
     getCities,

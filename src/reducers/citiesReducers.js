@@ -18,7 +18,7 @@ export default function (state = initialState, action) {
           };
         } else {
           return {
-           properties:[],
+            properties:[],
        };
         }
 
